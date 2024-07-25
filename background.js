@@ -12,6 +12,15 @@ function showelock(){
   chrome.runtime.sendMessage({ type: 'lockBrowser' });
   
 }
+chrome.action.onClicked.addListener(
+  (tab)=>{
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+     function:showelock
+    });
+    
+  }
+)
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'checkPassword') {
@@ -23,7 +32,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse({ success: false });
       }
     });
-    return true; // Keeps the message channel open for sendResponse
+    return true; 
+    
   } else if (message.type === 'lockBrowser') {
     chrome.storage.local.set({ locked: true });
     chrome.tabs.query({}, (tabs) => {
