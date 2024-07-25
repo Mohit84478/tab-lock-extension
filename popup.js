@@ -8,3 +8,4 @@ document.getElementById('lock').addEventListener('click', () => {
   chrome.runtime.sendMessage({ type: 'lockBrowser' });
   alert('Browser locked');
 });
+
